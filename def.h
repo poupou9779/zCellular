@@ -19,7 +19,7 @@ struct zCellular init_cellular(void);
 void gen_rand(struct zCellular *);
 int iscorrect(const char *);
 void display(struct zCellular , unsigned int);
-void evoluate(struct zCellular *);
+void evolve(struct zCellular *);
 void quit(struct zCellular *);
 
 #endif
