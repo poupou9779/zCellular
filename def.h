@@ -4,13 +4,13 @@
 #define EMPTY   '_'
 #define FILLED  '#'
 
-const char tab_evolution[8] = {EMPTY, FILLED, FILLED, FILLED, FILLED, EMPTY, EMPTY, EMPTY};
+const char tab_evolution[8] =  {EMPTY, FILLED, FILLED, FILLED, FILLED, EMPTY, EMPTY, EMPTY};
 
 struct zCellular
 {
     unsigned int length,
                  gens;
-    char *plate,
+    char *board,
          *tmp;
 };
 
