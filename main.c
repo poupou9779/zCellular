@@ -68,7 +68,7 @@ int iscorrect(const char *plate)
     return ret;
 }
 
-void evoluate(struct zCellular *cellular)
+void evolve(struct zCellular *cellular)
 {
     unsigned int i;
     for(i = 0; i < cellular->length; ++i)
@@ -105,9 +105,10 @@ int main(void)
     display(cellular, 0);
     for(i = 0; i < cellular.gens; ++i)
     {
-        evoluate(&cellular);
+        evolve(&cellular);
         display(cellular, i+1);
     }
     quit(&cellular);
     return EXIT_SUCCESS;
 }
+
