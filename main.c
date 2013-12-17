@@ -17,27 +17,27 @@ struct zCellular init_cellular(void)
 
     printf("length :\n\t");
     scanf("%u", &ret.length); purge();
-    ret.plate = malloc(sizeof(char) * (ret.length+1));
-    if(ret.plate == NULL)
-        fprintf(stderr, "Error : allocation of %u bytes failed !\n", sizeof(*(ret.plate) * ret.length));
+    ret.board = malloc(sizeof(char) * (ret.length+1));
+    if(ret.board == NULL)
+        fprintf(stderr, "Error : allocation of %u bytes failed !\n", sizeof(*(ret.board) * ret.length));
     else
     {
         ret.tmp = malloc(sizeof(char) * (ret.length+1));
         if(ret.tmp == NULL)
         {
-            fprintf(stderr, "Error : allocation of %u bytes failed !\n", sizeof(*(ret.plate) * ret.length));
-            free(ret.plate); ret.plate = NULL;
+            fprintf(stderr, "Error : allocation of %u bytes failed !\n", sizeof(*(ret.board) * ret.length));
+            free(ret.board); ret.board = NULL;
         }
         else
         {
             do
             {
                 printf("G 0 ('%c' = 1 && '%c' = 0) : ", FILLED, EMPTY);
-                fgets(ret.plate, (int)ret.length+1, stdin);
+                fgets(ret.board, (int)ret.length+1, stdin);
                 purge();
-                if(ret.plate[0] == 'R' || ret.plate[0] == 'r')
+                if(ret.board[0] == 'R' || ret.board[0] == 'r')
                     gen_rand(&ret);
-            } while(!iscorrect(ret.plate));
+            } while(!iscorrect(ret.board));
             printf("gens :\n\t");
             scanf("%u", &ret.gens);
             purge();
@@ -50,20 +50,20 @@ void gen_rand(struct zCellular *cellular)
 {
     unsigned int i;
     for(i = 0; i < cellular->length; ++i)
-        cellular->plate[i] = (rand()%2)&1 ? FILLED : EMPTY;
-    cellular->plate[cellular->length] = '\0';
+        cellular->board[i] = (rand()%2)&1 ? FILLED : EMPTY;
+    cellular->board[cellular->length] = '\0';
 }
 
-int iscorrect(const char *plate)
+int iscorrect(const char *board)
 {
     int ret = 1,
         i;
 
-    if(plate == NULL)
+    if(board == NULL)
         ret = 0;
     else
-        for(i = 0; plate[i] != '\0'; ++i)
-            if(plate[i] != EMPTY && plate[i] != FILLED)
+        for(i = 0; board[i] != '\0'; ++i)
+            if(board[i] != EMPTY && board[i] != FILLED)
                 ret = 0;
     return ret;
 }
@@ -72,22 +72,22 @@ void evolve(struct zCellular *cellular)
 {
     unsigned int i;
     for(i = 0; i < cellular->length; ++i)
-        cellular->tmp[i] = cellular->plate[i];
+        cellular->tmp[i] = cellular->board[i];
     for(i = 0; i < cellular->length; ++i)
-        cellular->plate[i] = tab_evolution[     ((i != 0 ? (cellular->tmp[i-1] == FILLED) : 0) << 2)
+        cellular->board[i] = tab_evolution[     ((i != 0 ? (cellular->tmp[i-1] == FILLED) : 0) << 2)
                                             +   ((cellular->tmp[i] == FILLED) << 1)
                                             +   ((i != cellular->length-1 ? (cellular->tmp[i+1] == FILLED) : 0))];
 }
 
 void display(struct zCellular cellular, unsigned int g)
 {
-    printf("G %04u : %s\n", g, cellular.plate);
+    printf("G %04u : %s\n", g, cellular.board);
 }
 
 void quit(struct zCellular *cellular)
 {
     cellular->length = 0;
-    free(cellular->plate); cellular->plate = NULL;
+    free(cellular->board); cellular->board = NULL;
     free(cellular->tmp); cellular->tmp = NULL;
 }
 
