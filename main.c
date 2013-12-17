@@ -81,11 +81,7 @@ void evolve(struct zCellular *cellular)
 
 void display(struct zCellular cellular, unsigned int g)
 {
-    unsigned int i;
-    printf("G %04u : ", g);
-    for(i = 0; i < cellular.length; ++i)
-        putchar(cellular.plate[i]);
-    putchar('\n');
+    printf("G %04u : %s\n", g, cellular.plate);
 }
 
 void quit(struct zCellular *cellular)
