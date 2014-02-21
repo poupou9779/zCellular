@@ -50,7 +50,7 @@ void gen_rand(struct zCellular *cellular)
 {
     unsigned int i;
     for(i = 0; i < cellular->length; ++i)
-        cellular->board[i] = (rand()%2)&1 ? FILLED : EMPTY;
+        cellular->board[i] = rand()&1 ? FILLED : EMPTY;
     cellular->board[cellular->length] = '\0';
 }
 
