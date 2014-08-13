@@ -17,15 +17,15 @@ struct zCellular init_cellular(void)
 
     printf("length :\n\t");
     scanf("%u", &ret.length); purge();
-    ret.board = malloc(sizeof(char) * (ret.length+1));
+    ret.board = malloc(sizeof(*ret.board) * (ret.length+1));
     if(ret.board == NULL)
-        fprintf(stderr, "Error : allocation of %u bytes failed !\n", sizeof(*(ret.board) * ret.length));
+        fprintf(stderr, "Error : allocation of %u bytes failed !\n", sizeof(*ret.board) * (ret.length+1));
     else
     {
-        ret.tmp = malloc(sizeof(char) * (ret.length+1));
+        ret.tmp = malloc(sizeof(*ret.tmp) * (ret.length+1));
         if(ret.tmp == NULL)
         {
-            fprintf(stderr, "Error : allocation of %u bytes failed !\n", sizeof(*(ret.board) * ret.length));
+            fprintf(stderr, "Error : allocation of %u bytes failed !\n", sizeof(*ret.board) * (ret.length+1));
             free(ret.board); ret.board = NULL;
         }
         else
@@ -84,7 +84,7 @@ void display(struct zCellular cellular, unsigned int g)
     printf("G %04u : %s\n", g, cellular.board);
 }
 
-void quit(struct zCellular *cellular)
+void free(struct zCellular *cellular)
 {
     cellular->length = 0;
     free(cellular->board); cellular->board = NULL;
@@ -104,7 +104,7 @@ int main(void)
         evolve(&cellular);
         display(cellular, i+1);
     }
-    quit(&cellular);
+    free(&cellular);
     return EXIT_SUCCESS;
 }
 
